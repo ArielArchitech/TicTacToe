@@ -1,0 +1,774 @@
+
+/* ! VARIABLES */
+
+:root {
+    --fire: #ff6a00;
+    --fire-glow: #ff3c00;
+    --ice: #00c8ff;
+    --ice-glow: #0077ff;
+    --ring-orange: #ffaa00;
+    --ring-red: #ff0033;
+    --ring-blue: #00d4ff;
+    --ring-purple: #9900ff;
+    --corner-bg: #0a0a0a;
+    --corner-border: #00d4ff;
+}
+
+/* ! PRESET */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #0a0a0a;
+    min-height: 669px;
+    min-width: 375px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Rajdhani', sans-serif;
+    overflow: hidden;
+}
+
+/* Subtle background noise/texture */
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+        radial-gradient(ellipse 60% 40% at 20% 50%, rgba(255, 100, 0, 0.06) 0%, transparent 70%),
+        radial-gradient(ellipse 60% 40% at 80% 50%, rgba(0, 200, 255, 0.06) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.screen {
+    position: relative;
+    width: 100%;
+    height: 750px;
+    background: #060608;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/*! ── CHARACTERS ── */
+.character {
+    position: relative;
+    z-index: 2;
+    width: 340px;
+    height: 100%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-shrink: 0;
+}
+
+.char-img {
+    height: 88%;
+    width: auto;
+    object-fit: contain;
+    position: relative;
+    z-index: 2;
+    filter: drop-shadow(0 0 30px var(--glow-color)) drop-shadow(0 0 60px var(--glow-color));
+    animation: float 3s ease-in-out infinite;
+}
+
+.character.fire .char-img {
+    --glow-color: rgba(255, 77, 0, 0.7);
+}
+
+.character.ice .char-img {
+    --glow-color: rgba(0, 200, 255, 0.7);
+}
+
+/*<> Ground glow under characters */
+.char-ground {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 220px;
+    height: 40px;
+    border-radius: 50%;
+    z-index: 1;
+}
+
+.character.fire .char-ground {
+    background: radial-gradient(ellipse, rgba(255, 100, 0, 0.5) 0%, transparent 70%);
+    box-shadow: 0 0 40px 20px rgba(255, 60, 0, 0.3);
+}
+
+.character.ice .char-ground {
+    background: radial-gradient(ellipse, rgba(0, 200, 255, 0.5) 0%, transparent 70%);
+    box-shadow: 0 0 40px 20px rgba(0, 120, 255, 0.3);
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+/*! ── ARENA RING ── */
+
+.arena{
+    position: absolute;
+    left: 50%;
+    top: 55%;
+    transform: translate(-50%, -25%);
+    /* border: #00d4ff solid 2px; */
+}
+
+.arenaRing{
+    width: 580px;
+    /* border: #00d4ff solid 2px; */
+}
+
+#square1{
+    /* border: #00d4ff solid 2px;
+    background-color: #fff; */
+    position: absolute;
+    width: 360px;
+    height: 360px;
+    left: 21%;
+    top: 4%;
+    clip-path: polygon(75% 17%, 84% 21%, 90% 25%, 97.5% 32%, 66% 32%, 64.5% 14%, 68% 15%);
+    
+}
+#square2{
+    /* border: #00d4ff solid 2px;
+    background-color: #fff; */
+    position: absolute;
+    width: 360px;
+    height: 360px;
+    left: 21%;
+    top: 4%;
+    clip-path: polygon(50% 11.5%, 50% 11.5%, 62% 13%, 63% 32%, 30% 32%, 31% 13%, 44% 11.5%);
+}
+#square3{
+    /* border: #00d4ff solid 2px;
+    background-color: #fff; */
+    position: absolute;
+    width: 360px;
+    height: 360px;
+    left: 15.5%;
+    top: 3.5%;
+clip-path: polygon(29% 16%, 37.8% 14%, 36.5% 33%, 3% 33%, 11% 26%, 20% 20%);
+}
+#square4{
+    /* border: #00d4ff solid 2px;
+    background-color: #fff; */
+    position: absolute;
+    width: 360px;
+    height: 360px;
+    left: 23.7%;
+    top: 6.5%;
+clip-path: polygon(62% 32%, 95.3% 32%, 97.3% 37%, 98.8% 42%, 99.3% 47%, 99% 52%, 63.5% 52%);
+}
+
+#square5{
+    /* background-color: #fff; */
+    position: absolute;
+    width: 360px;
+    height: 360px;
+    left: 22%;
+    top: 6.5%;
+    clip-path: polygon(28% 32%, 61.5% 32%, 62.5% 52%, 27% 52%);
+}
+#square6{
+   /*  background-color: #fff; */
+    position: absolute;
+    width: 360px;
+    height: 360px;
+    left: 13%;
+    top: 6.5%;
+    clip-path: polygon(5% 32%, 40% 32%, 39% 52%, 2% 52%, 1.5% 46%, 1.8% 41%, 3% 36%);
+}
+#square7{
+    /* background-color: #fff; */
+    position: absolute;
+    width: 360px;
+    height: 360px;
+    left: 24%;
+    top: 9%;
+    clip-path: polygon(63% 52%, 98.5% 52%, 95% 58%, 89.5% 63%, 83.5% 67%, 76.5% 71%, 65% 75%);
+}
+#square8{
+    /* background-color: #fff; */
+    position: absolute;
+    width: 360px;
+    height: 360px;
+    left: 15%;
+    top: 10%;
+    clip-path: polygon(38% 51%, 74% 51%, 76% 75%, 58% 77%, 51% 77%, 44% 76%, 37% 75%);
+}
+#square9{
+    /* background-color: #fff; */
+    position: absolute;
+    width: 360px;
+    height: 360px;
+    left: 13%;
+    top: 9%;
+    clip-path: polygon(2.5% 52%, 38% 52.5%, 37% 75.5%, 25% 72%, 20% 69%, 12% 64%, 6% 58%);
+}
+
+.gameBtn {
+    cursor: pointer;
+    position: absolute;
+    background: transparent;
+    border: none;
+    pointer-events: all;
+    transition: background 0.2s;
+    /* No flex/padding on the base — we use ::after for text */
+}
+
+/* Text label via pseudo-element, positioned at each slice's center */
+.gameBtn::after {
+    content: attr(data-label);
+    position: absolute;
+    font-family: 'Orbitron', monospace;
+    font-size: 8.5px;
+    font-weight: 700;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: #ffffff;
+    text-shadow: 0 0 8px rgba(0, 212, 255, 0.9), 0 0 2px #000;
+    white-space: nowrap;
+    pointer-events: none;
+    transition: text-shadow 0.2s;
+}
+
+.gameBtn:hover {
+    background: rgba(0, 212, 255, 0.25);
+}
+
+.gameBtn:hover::after {
+    text-shadow: 0 0 14px rgba(0, 212, 255, 1), 0 0 28px rgba(0, 212, 255, 0.6), 0 0 2px #000;
+}
+
+/* Remove active-mode highlight entirely */
+.gameBtn.active-mode {
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+.gameBtn.active-mode::after {
+    text-shadow: 0 0 8px rgba(0, 212, 255, 0.9), 0 0 2px #000 !important;
+    color: #ffffff !important;
+}
+
+/* ── Per-button sizing and clip-path (unchanged from your CSS) ── */
+#restartBtn {
+    width: 360px;
+    height: 360px;
+    left: 3%;
+    top: 9.2%;
+    clip-path: polygon(7% 60%, 10% 64%, 14% 68.8%, 17.5% 72%, 24.7% 77%, 23.5% 90%, 14% 83%, 11% 79.8%, 9% 77%, 7% 74%);
+}
+
+#onePlayerModeBtn {
+    width: 360px;
+    height: 360px;
+    left: 10%;
+    top: 12.3%;
+    clip-path: polygon(26% 78%, 31% 80%, 36% 81.5%, 40% 82.5%, 57% 85%, 55% 99%, 44% 97.5%, 35% 95.5%, 30% 93.5%, 26% 91.5%);
+}
+
+#twoPlayersModeBtn {
+    width: 360px;
+    height: 360px;
+    left: 20.7%;
+    top: 14.5%;
+    clip-path: polygon(54% 83%, 65% 81.8%, 75% 79.5%, 85% 76%, 84% 91%, 75% 93.5%, 65% 95.5%, 55% 96%);
+}
+
+#scoreBoard {
+    width: 360px;
+    height: 360px;
+    left: 30.5%;
+    top: 12.5%;
+    clip-path: polygon(81% 73%, 86% 69.5%, 93% 63.8%, 99.5% 56%, 99.5% 71%, 95% 76%, 89% 81%, 83% 86%);
+}
+
+/*
+   LABEL POSITIONS — each ::after is placed at the visual centroid
+   of its clip-path slice (calculated from the polygon coordinates).
+ 
+   Restart slice centroid  ≈ x:14%  y:74%  of the 360×360 box
+   1P Mode  slice centroid ≈ x:41%  y:88%  of the 360×360 box
+   2P Mode  slice centroid ≈ x:70%  y:87%  of the 360×360 box
+   ScoreBoard centroid     ≈ x:91%  y:70%  of the 360×360 box
+*/
+
+#restartBtn::after {
+    content: 'Restart';
+    left: calc(11.5% - 18px);
+    top: calc(76% - 5px);
+    transform: rotate(38deg);
+    font-size: 10px;
+}
+
+/*
+  1P MODE — bottom-left curve, wall angle ~-22deg
+  Polygon spans roughly x:26–57%, y:78–99% → centroid ≈ x:40%, y:88%
+*/
+#onePlayerModeBtn::after {
+    content: '1P Mode';
+    left: calc(38% - 22px);
+    top: calc(90% - 5px);
+    transform: rotate(12deg);
+    font-size: 10.5px;
+}
+
+/*
+  2P MODE — bottom-right curve, wall angle ~+22deg
+  Polygon spans roughly x:54–85%, y:76–96% → centroid ≈ x:70%, y:86%
+*/
+#twoPlayersModeBtn::after {
+    content: '2P Mode';
+    left: calc(67% - 22px);
+    top: calc(87% - 5px);
+    transform: rotate(-12deg);
+    font-size: 10.5px;
+}
+
+/*
+  SCOREBOARD — far right of ring, wall angle steep ~+52deg
+  Polygon spans roughly x:81–100%, y:56–86% → centroid ≈ x:91%, y:70%
+*/
+#scoreBoard::after {
+    content: 'Score';
+    left: calc(92% - 28px);
+    top: calc(73% - 5px);
+    transform: rotate(-38deg);
+    font-size: 7px;
+    letter-spacing: 0.1em;
+    font-size:10px;
+}
+
+/* ── Also fix the turnIndicator class name (HTML uses turnIndicator not turn-indicator) ── */
+.turnIndicator {
+    position: absolute;
+    top: 62px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Orbitron', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 4px 16px;
+    border: 1px solid;
+    z-index: 10;
+    white-space: nowrap;
+    transition: color 0.4s, border-color 0.4s, box-shadow 0.4s;
+}
+
+.turnIndicator.fire {
+    color: var(--fire);
+    border-color: var(--fire);
+    background: rgba(255, 106, 0, 0.07);
+    box-shadow: 0 0 10px rgba(255, 106, 0, 0.3);
+}
+
+.turnIndicator.ice {
+    color: var(--ice);
+    border-color: var(--ice);
+    background: rgba(0, 200, 255, 0.07);
+    box-shadow: 0 0 10px rgba(0, 200, 255, 0.3);
+}
+
+/*! ── GAME NAME TITLE ── */
+.title {
+    position: absolute;
+    top: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Orbitron', monospace;
+    font-weight: 900;
+    font-size: 28px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    z-index: 10;
+    white-space: nowrap;
+    background: linear-gradient(90deg, var(--fire) 0%, #ffdd00 40%, #fff 50%, #00ccff 60%, var(--ice) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 0 12px rgba(255, 170, 0, 0.5));
+}
+
+/*! ── PLAYER NAME TAGS ── */
+.player-tag {
+    position: absolute;
+    top: 28px;
+    font-family: 'Orbitron', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border: 1px solid;
+    z-index: 10;
+}
+
+.player-tag.p1 {
+    left: 30px;
+    color: var(--fire);
+    border-color: var(--fire);
+    background: rgba(255, 100, 0, 0.08);
+    box-shadow: 0 0 12px rgba(255, 100, 0, 0.3);
+}
+
+.player-tag.p2 {
+    right: 30px;
+    color: var(--ice);
+    border-color: var(--ice);
+    background: rgba(0, 200, 255, 0.08);
+    box-shadow: 0 0 12px rgba(0, 200, 255, 0.3);
+}
+
+
+
+/* Scanline overlay */
+.scanlines {
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(0deg,
+            transparent,
+            transparent 2px,
+            rgba(0, 0, 0, 0.06) 2px,
+            rgba(0, 0, 0, 0.06) 4px);
+    pointer-events: none;
+    z-index: 20;
+}
+
+/* Particles placeholder (will be added by JS) */
+canvas.particles {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* ── Turn indicator ── */
+.turn-indicator {
+    position: absolute;
+    top: 62px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Orbitron', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 4px 16px;
+    border: 1px solid;
+    z-index: 10;
+    white-space: nowrap;
+    transition: color 0.4s, border-color 0.4s, box-shadow 0.4s;
+}
+
+.turn-indicator.fire {
+    color: var(--fire);
+    border-color: var(--fire);
+    background: rgba(255, 106, 0, 0.07);
+    box-shadow: 0 0 10px rgba(255, 106, 0, 0.3);
+}
+
+.turn-indicator.ice {
+    color: var(--ice);
+    border-color: var(--ice);
+    background: rgba(0, 200, 255, 0.07);
+    box-shadow: 0 0 10px rgba(0, 200, 255, 0.3);
+}
+
+/* ── Cell states ── */
+.cell {
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+/* Hover hint — shows current player's colour before clicking */
+.cell.hint-fire {
+    background-color: rgba(255, 106, 0, 0.35) !important;
+}
+
+.cell.hint-ice {
+    background-color: rgba(0, 200, 255, 0.35) !important;
+}
+
+/* Claimed states */
+.cell.fire {
+    background-color: rgba(255, 90, 0, 0.82) !important;
+    box-shadow: inset 0 0 18px rgba(255, 60, 0, 0.6);
+}
+
+.cell.ice {
+    background-color: rgba(0, 195, 255, 0.82) !important;
+    box-shadow: inset 0 0 18px rgba(0, 120, 255, 0.6);
+}
+
+/* Winning cells — pulsing glow */
+@keyframes winPulse {
+
+    0%,
+    100% {
+        opacity: 1;
+        filter: brightness(1);
+    }
+
+    50% {
+        opacity: 0.7;
+        filter: brightness(1.6);
+    }
+}
+
+.cell.winner {
+    animation: winPulse 0.7s ease-in-out infinite;
+}
+
+.cell.fire.winner {
+    background-color: #ff5500 !important;
+    box-shadow: 0 0 30px 10px rgba(255, 80, 0, 0.8) !important;
+}
+
+.cell.ice.winner {
+    background-color: #00ccff !important;
+    box-shadow: 0 0 30px 10px rgba(0, 180, 255, 0.8) !important;
+}
+
+/* Active mode button highlight */
+.gameBtn.active-mode {
+    background-color: rgba(0, 212, 255, 0.22) !important;
+    color: #00d4ff !important;
+    box-shadow: 0 0 16px 4px rgba(0, 212, 255, 0.5) !important;
+}
+
+/* ── Character victory / defeat animations ── */
+@keyframes victoryFloat {
+
+    0%,
+    100% {
+        transform: translateY(0px) scale(1.06);
+        filter: drop-shadow(0 0 40px var(--glow-color)) drop-shadow(0 0 80px var(--glow-color));
+    }
+
+    50% {
+        transform: translateY(-18px) scale(1.08);
+        filter: drop-shadow(0 0 60px var(--glow-color)) drop-shadow(0 0 110px var(--glow-color));
+    }
+}
+
+@keyframes defeated {
+
+    0%,
+    100% {
+        opacity: 0.35;
+        transform: translateY(0px);
+    }
+
+    50% {
+        opacity: 0.3;
+        transform: translateY(4px);
+    }
+}
+
+.character.victory .char-img {
+    animation: victoryFloat 1.1s ease-in-out infinite !important;
+}
+
+.character.defeated .char-img {
+    animation: defeated 2s ease-in-out infinite !important;
+}
+
+/* ── Result overlay ── */
+.result-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(6, 6, 8, 0.78);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+    backdrop-filter: blur(3px);
+}
+
+.result-overlay.visible {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.result-box {
+    text-align: center;
+    padding: 38px 52px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: #0d0d10;
+    clip-path: polygon(16px 0%, 100% 0%, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0% 100%, 0% 16px);
+    transform: translateY(20px);
+    transition: transform 0.4s ease;
+}
+
+.result-overlay.visible .result-box {
+    transform: translateY(0);
+}
+
+.result-msg {
+    font-family: 'Orbitron', monospace;
+    font-size: 32px;
+    font-weight: 900;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    display: block;
+}
+
+.result-msg.fire {
+    color: var(--fire);
+    text-shadow: 0 0 24px rgba(255, 106, 0, 0.8);
+}
+
+.result-msg.ice {
+    color: var(--ice);
+    text-shadow: 0 0 24px rgba(0, 200, 255, 0.8);
+}
+
+.result-msg.draw {
+    color: #fff;
+    text-shadow: 0 0 18px rgba(255, 255, 255, 0.4);
+}
+
+.play-again-btn {
+    font-family: 'Orbitron', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 10px 28px;
+    background: transparent;
+    border: 1px solid var(--corner-border);
+    color: var(--corner-border);
+    cursor: pointer;
+    transition: background 0.2s, box-shadow 0.2s;
+}
+
+.play-again-btn:hover {
+    background: rgba(0, 212, 255, 0.14);
+    box-shadow: 0 0 18px rgba(0, 212, 255, 0.5);
+}
+
+/* ── Score board overlay ── */
+.scoreboard-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(6, 6, 8, 0.82);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s ease;
+    backdrop-filter: blur(3px);
+}
+
+.scoreboard-overlay.visible {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.scoreboard-box {
+    text-align: center;
+    padding: 36px 56px;
+    border: 1px solid rgba(0, 212, 255, 0.25);
+    background: #0d0d10;
+    clip-path: polygon(16px 0%, 100% 0%, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0% 100%, 0% 16px);
+    min-width: 300px;
+}
+
+.scoreboard-title {
+    font-family: 'Orbitron', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ice);
+    margin-bottom: 28px;
+    display: block;
+}
+
+.score-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.score-row:last-of-type {
+    border-bottom: none;
+}
+
+.score-label {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.score-label.fire {
+    color: var(--fire);
+}
+
+.score-label.ice {
+    color: var(--ice);
+}
+
+.score-label.draw {
+    color: #888;
+}
+
+.score-value {
+    font-family: 'Orbitron', monospace;
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+    min-width: 40px;
+    text-align: right;
+}
+
+.close-btn {
+    margin-top: 24px;
+    font-family: 'Orbitron', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 8px 22px;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: #888;
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+    display: inline-block;
+}
+
+.close-btn:hover {
+    border-color: rgba(0, 212, 255, 0.5);
+    color: var(--ice);
+}

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fire vs Ice</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Rajdhani:wght@400;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="iceVsFireStyle.css">
+</head>
+
+<body>
+    <div class="screen" id="screen">
+        <canvas class="particles" id="particles" width="1280" height="720"></canvas>
+
+        <!--<> TITLE & TURN INDICATOR -->
+        <div class="title">Fire vs Ice</div>
+        <div class="turnIndicator" id="turnIndicator"></div>
+        <!--<> PLAYER TAGS -->
+        <div class="player-tag p1">Player 1</div>
+        <div class="player-tag p2">Player 2</div>
+
+        <!--<> FIRE CHARACTER -->
+        <div class="character fire">
+            <div class="char-ground"></div>
+            <img class="char-img" src="/images/fireGirl.png" alt="Fire Character"
+                style="object-position: 18% center; width: 340px; height: auto; max-height: 88%;"
+                onerror="this.style.display='none'">
+        </div>
+
+        <!--<> ARENA CENTER -->
+        <div class="arena">
+            <div class="arenaRing">
+                <img src="/images/Arena.png" alt="Arena ring">
+            </div>
+
+            <!--<> ARENAS CELLS -->
+            <div class="cell" id="square1" data-square-type="TR"></div>
+            <div class="cell" id="square2" data-square-type="TC"></div>
+            <div class="cell" id="square3" data-square-type="TL"></div>
+            <div class="cell" id="square4" data-square-type="MR"></div>
+            <div class="cell" id="square5" data-square-type="MC"></div>
+            <div class="cell" id="square6" data-square-type="ML"></div>
+            <div class="cell" id="square7" data-square-type="BR"></div>
+            <div class="cell" id="square8" data-square-type="BC"></div>
+            <div class="cell" id="square9" data-square-type="BL"></div>
+
+            <!--<> GAMES FUNCTION BUTTONS -->
+            <div class="gameButtons">
+                <div class="gameBtn" id="restartBtn" data-label="Restart"></div>
+                <div class="gameBtn" id="onePlayerModeBtn" data-label="1P Mode"></div>
+                <div class="gameBtn" id="twoPlayersModeBtn" data-label="2P Mode"></div>
+                <div class="gameBtn" id="scoreBoard" data-label="Score"></div>
+            </div>
+        </div>
+
+        <!--<> ICE CHARACTER -->
+        <div class="character ice">
+            <div class="char-ground"></div>
+            <img class="char-img" src="/images/IceMan.png" alt="Ice Character"
+                style="object-position: 82% center; width: 340px; height: auto; max-height: 88%;"
+                onerror="this.style.display='none'">
+        </div>
+
+        <!--<> RESULT MODAL -->
+        <div class="result-overlay" id="resultOverlay">
+            <div class="result-box">
+                <span class="result-msg" id="resultMsg"></span>
+                <button class="play-again-btn" id="playAgainBtn">Play Again</button>
+            </div>
+        </div>
+
+        <!--<> SCORE BOARD OVERLAY -->
+        <div class="scoreboard-overlay" id="scoreBoardOverlay">
+            <div class="scoreboard-box">
+                <span class="scoreboard-title">Score Board</span>
+                <div class="score-row">
+                    <span class="score-label fire">🔥 Fire</span>
+                    <span class="score-value" id="scoreFireEl">0</span>
+                </div>
+                <div class="score-row">
+                    <span class="score-label ice">❄️ Ice</span>
+                    <span class="score-value" id="scoreIceEl">0</span>
+                </div>
+                <div class="score-row">
+                    <span class="score-label draw">Draws</span>
+                    <span class="score-value" id="scoreDrawsEl">0</span>
+                </div>
+                <button class="close-btn" id="closeScoreBoard">Close</button>
+            </div>
+        </div>
+
+        <!--<> SCANLINE OVERLAY -->
+        <div class="scanlines"></div>
+
+
+    </div>
+
+    <!--<> SCRIPT JS -->
+    <script src="app.js"></script>
+</body>
+
+</html>
