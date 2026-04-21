@@ -1,0 +1,169 @@
+/* Styling to match the dark stone/paper texture */
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #1a1a1a;
+    background-image:
+        radial-gradient(circle, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, #111, #222);
+    background-size: 10px 10px, 100% 100%;
+    font-family: 'Times New Roman', serif;
+    color: #fff;
+}
+
+.app-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+/* Top Name Input - Exact Magenta Glow */
+.name-input-container {
+    border: 1px solid #ff00ff;
+    box-shadow: 0 0 10px #ff00ff, inset 0 0 5px #ff00ff;
+    padding: 2px 20px;
+    background: black;
+}
+
+.name-input {
+    background: transparent;
+    border: none;
+    color: #ddd;
+    text-align: center;
+    font-size: 1.1rem;
+    outline: none;
+    width: 200px;
+}
+
+/* Positioning the pieces */
+.game-board {
+    position: relative;
+    width: 450px;
+    height: 450px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* The Main Amber Circle */
+.circle-area {
+    width: 360px;
+    height: 360px;
+    background: #000;
+    border-radius: 50%;
+    border: 2px solid #ff9100;
+    box-shadow: 0 0 35px rgba(255, 145, 0, 0.5);
+    z-index: 5;
+    overflow: hidden;
+}
+
+.ttt-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    width: 100%;
+    height: 100%;
+}
+
+.cell {
+    border: 0.5px solid rgba(255, 145, 0, 0.2);
+    transition: background 0.2s;
+}
+
+.cell:hover {
+    background: rgba(255, 145, 0, 0.05);
+}
+
+/* Remove outer grid lines inside the circle */
+.cell:nth-child(3n) {
+    border-right: none;
+}
+
+.cell:nth-child(n+7) {
+    border-bottom: none;
+}
+
+.cell:nth-child(-n+3) {
+    border-top: none;
+}
+
+.cell:nth-child(3n+1) {
+    border-left: none;
+}
+
+/* The Corner Buttons - Cyan Glow */
+.corner {
+    position: absolute;
+    width: 130px;
+    height: 130px;
+    background: black;
+    /* border: 2px solid #00ccff; */
+    box-shadow: 0 0 15px rgba(0, 204, 255, 0.6);
+    color: white;
+    font-family: inherit;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0;
+}
+
+button.corner {
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button.corner:hover {
+    background: #002233;
+}
+
+/* Exact Clip-Paths for the "Arrow" look */
+.top-left {
+    top: 10px;
+    left: 10px;
+    clip-path: polygon(0 0, 50% 0, 100% 50%, 82% 55%, 64% 67%, 54% 83%, 50% 100%, 0 50%);
+    border: #00ccff solid 2px;
+}
+
+.top-left .text {
+    transform: rotate(-90deg) translate(-10px, -10px);
+}
+
+.top-right {
+    top: 10px;
+    right: 10px;
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 65% 100%, 0% 30%);
+}
+
+.top-right .text {
+    transform: rotate(45deg) translate(10px, -10px);
+}
+
+.bottom-left {
+    bottom: 10px;
+    left: 10px;
+    clip-path: polygon(0% 0%, 35% 0%, 100% 70%, 100% 100%, 0% 100%);
+}
+
+.bottom-left .text {
+    transform: rotate(45deg) translate(-10px, 10px);
+}
+
+.bottom-right {
+    bottom: 10px;
+    right: 10px;
+    clip-path: polygon(65% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 70%);
+}
+
+.bottom-right .text {
+    transform: rotate(-45deg) translate(10px, 10px);
+}
+
+.text {
+    font-size: 0.95rem;
+    line-height: 1.2;
+}

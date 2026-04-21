@@ -56,7 +56,7 @@ body::before {
     justify-content: space-between;
 }
 
-/*! ── CHARACTERS ── */
+/*! CHARACTERS */
 .character {
     position: relative;
     z-index: 2;
@@ -120,7 +120,7 @@ body::before {
     }
 }
 
-/*! ── ARENA RING ── */
+/*! ARENA RING */
 
 .arena{
     position: absolute;
@@ -223,6 +223,8 @@ clip-path: polygon(62% 32%, 95.3% 32%, 97.3% 37%, 98.8% 42%, 99.3% 47%, 99% 52%,
     clip-path: polygon(2.5% 52%, 38% 52.5%, 37% 75.5%, 25% 72%, 20% 69%, 12% 64%, 6% 58%);
 }
 
+/*! GAME BUTTONS */
+
 .gameBtn {
     cursor: pointer;
     position: absolute;
@@ -301,15 +303,7 @@ clip-path: polygon(62% 32%, 95.3% 32%, 97.3% 37%, 98.8% 42%, 99.3% 47%, 99% 52%,
     clip-path: polygon(81% 73%, 86% 69.5%, 93% 63.8%, 99.5% 56%, 99.5% 71%, 95% 76%, 89% 81%, 83% 86%);
 }
 
-/*
-   LABEL POSITIONS — each ::after is placed at the visual centroid
-   of its clip-path slice (calculated from the polygon coordinates).
- 
-   Restart slice centroid  ≈ x:14%  y:74%  of the 360×360 box
-   1P Mode  slice centroid ≈ x:41%  y:88%  of the 360×360 box
-   2P Mode  slice centroid ≈ x:70%  y:87%  of the 360×360 box
-   ScoreBoard centroid     ≈ x:91%  y:70%  of the 360×360 box
-*/
+/*<> LABEL POSITIONS — each ::after is placed at the visual centroid of its clip-path slice (calculated from the polygon coordinates) */
 
 #restartBtn::after {
     content: 'Restart';
@@ -319,10 +313,6 @@ clip-path: polygon(62% 32%, 95.3% 32%, 97.3% 37%, 98.8% 42%, 99.3% 47%, 99% 52%,
     font-size: 10px;
 }
 
-/*
-  1P MODE — bottom-left curve, wall angle ~-22deg
-  Polygon spans roughly x:26–57%, y:78–99% → centroid ≈ x:40%, y:88%
-*/
 #onePlayerModeBtn::after {
     content: '1P Mode';
     left: calc(38% - 22px);
@@ -331,10 +321,6 @@ clip-path: polygon(62% 32%, 95.3% 32%, 97.3% 37%, 98.8% 42%, 99.3% 47%, 99% 52%,
     font-size: 10.5px;
 }
 
-/*
-  2P MODE — bottom-right curve, wall angle ~+22deg
-  Polygon spans roughly x:54–85%, y:76–96% → centroid ≈ x:70%, y:86%
-*/
 #twoPlayersModeBtn::after {
     content: '2P Mode';
     left: calc(67% - 22px);
@@ -343,10 +329,6 @@ clip-path: polygon(62% 32%, 95.3% 32%, 97.3% 37%, 98.8% 42%, 99.3% 47%, 99% 52%,
     font-size: 10.5px;
 }
 
-/*
-  SCOREBOARD — far right of ring, wall angle steep ~+52deg
-  Polygon spans roughly x:81–100%, y:56–86% → centroid ≈ x:91%, y:70%
-*/
 #scoreBoard::after {
     content: 'Score';
     left: calc(92% - 28px);
@@ -357,7 +339,7 @@ clip-path: polygon(62% 32%, 95.3% 32%, 97.3% 37%, 98.8% 42%, 99.3% 47%, 99% 52%,
     font-size:10px;
 }
 
-/* ── Also fix the turnIndicator class name (HTML uses turnIndicator not turn-indicator) ── */
+/*! TURN INDICATOR */
 .turnIndicator {
     position: absolute;
     top: 62px;

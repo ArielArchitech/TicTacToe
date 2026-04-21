@@ -1,11 +1,13 @@
 /* ============================================================
-   FIRE VS ICE — app.js
+   ! FIRE VS ICE — app.js
    ============================================================ */
 
 const FIRE = 'fire';
 const ICE = 'ice';
 
-const WIN_LINES = [
+//<> ALL WINNING OPTIONS
+
+const winOptions = [
     ['TR', 'TC', 'TL'],
     ['MR', 'MC', 'ML'],
     ['BR', 'BC', 'BL'],
@@ -16,7 +18,8 @@ const WIN_LINES = [
     ['TL', 'MC', 'BR'],
 ];
 
-/* ── State ── */
+//<>  GAME STATE - START AS 2P MODE
+
 let board = {};
 let currentPlayer = FIRE;
 let gameMode = '2P';
@@ -24,10 +27,11 @@ let gameOver = false;
 let aiThinking = false;
 let scores = { fire: 0, ice: 0, draws: 0 };
 
-/* Claimed tiles to redraw each frame */
-let claimedTiles = []; // { squareType, player, scale, targetScale }
+//<> CLAIMED TILES TO REDRAW EACH FRAME 
+//* OPTIONS FOR claimedTiles = [{ squareType, player, scale, targetScale }]
+let claimedTiles = [];
 
-/* ── DOM refs ── */
+//<> DOM REFERENCES
 const cells = document.querySelectorAll('.cell');
 const turnIndicator = document.getElementById('turnIndicator');
 const resultOverlay = document.getElementById('resultOverlay');
@@ -47,15 +51,14 @@ const canvas = document.getElementById('particles');
 const ctx = canvas.getContext('2d');
 
 /* ============================================================
-   TILE IMAGES — preload both
-   Update paths to match wherever your images are served from.
+   !TILE IMAGES — PRELOAD BOTH ICE & FIRE
    ============================================================ */
 const tileImages = { fire: new Image(), ice: new Image() };
 tileImages.fire.src = '/images/fireLand.png';
 tileImages.ice.src = '/images/iceLand.png';
 
 /* ============================================================
-   CANVAS SETUP
+   !CANVAS SETUP
    ============================================================ */
 function resizeCanvas() {
     const screen = document.getElementById('screen');
@@ -66,10 +69,9 @@ resizeCanvas();
 window.addEventListener('resize', resizeCanvas);
 
 /* ============================================================
-   CELL POLYGON DATA
-   Visual centroid of each clip-path slice, relative to .arena.
+   !CELL POLYGON DATA - Visual centroid of each clip-path slice, relative to .arena.
    ============================================================ */
-const CELL_POLYGON_DATA = {
+const cellShapeData = {
     TR: { divLeftPct: 21, divTopPct: 4, divW: 360, divH: 360, points: [[75, 17], [84, 21], [90, 25], [97.5, 32], [66, 32], [64.5, 14], [68, 15]] },
     TC: { divLeftPct: 21, divTopPct: 4, divW: 360, divH: 360, points: [[50, 11.5], [62, 13], [63, 32], [30, 32], [31, 13], [44, 11.5]] },
     TL: { divLeftPct: 15.5, divTopPct: 3.5, divW: 360, divH: 360, points: [[29, 16], [37.8, 14], [36.5, 33], [3, 33], [11, 26], [20, 20]] },
@@ -81,6 +83,7 @@ const CELL_POLYGON_DATA = {
     BL: { divLeftPct: 13, divTopPct: 9, divW: 360, divH: 360, points: [[2.5, 52], [38, 52.5], [37, 75.5], [25, 72], [20, 69], [12, 64], [6, 58]] },
 };
 
+//<> GEOMETRY HELPER FUNCTIONS 
 function polyCenter(points, divLeft, divTop, divW, divH) {
     let cx = 0, cy = 0;
     points.forEach(([px, py]) => { cx += px / 100 * divW + divLeft; cy += py / 100 * divH + divTop; });
@@ -100,7 +103,7 @@ function polyRadius(points, cx, cy, divLeft, divTop, divW, divH) {
 
 /* Returns polygon vertices in canvas-space — used for ctx.clip() masking */
 function getPolygonCanvasPoints(squareType) {
-    const data = CELL_POLYGON_DATA[squareType];
+    const data = cellShapeData[squareType];
     if (!data) return [];
     const arena = document.querySelector('.arena');
     const arenaRect = arena.getBoundingClientRect();
@@ -118,7 +121,7 @@ function getPolygonCanvasPoints(squareType) {
 }
 
 function getCellCenter(squareType) {
-    const data = CELL_POLYGON_DATA[squareType];
+    const data = cellShapeData[squareType];
     if (!data) return null;
     const arena = document.querySelector('.arena');
     const arenaRect = arena.getBoundingClientRect();
@@ -145,12 +148,11 @@ function getLaunchOrigin(player) {
 }
 
 /* ============================================================
-   DRAW CLAIMED TILES
-   - Clips to the exact polygon shape of each tile
-   - Image is sized to the polygon bounding box so it fills
-     the tile without overflowing
-   - Pop-in scale animation on placement
-   - Pulsing glow on winning tiles
+    ! DRAW CLAIMED TILES
+    <> - Clips to the exact polygon shape of each tile
+    <> - Image is sized to the polygon bounding box so it fills the tile without overflowing
+    <> - Pop-in scale animation on placement
+    <> - Pulsing glow on winning tiles
    ============================================================ */
 function drawClaimedTiles(winningTypes) {
     claimedTiles.forEach(tile => {
@@ -161,12 +163,12 @@ function drawClaimedTiles(winningTypes) {
         const img = tileImages[tile.player];
         if (!img.complete || img.naturalWidth === 0) return;
 
-        // Pop-in scale animation
+        //<> Pop-in scale animation
         if (tile.scale < tile.targetScale) {
             tile.scale = Math.min(tile.targetScale, tile.scale + 0.06);
         }
 
-        // Compute polygon bounding box in canvas space
+        //<> calculate polygon bounding box in canvas space
         const xs = verts.map(v => v.x), ys = verts.map(v => v.y);
         const minX = Math.min(...xs), maxX = Math.max(...xs);
         const minY = Math.min(...ys), maxY = Math.max(...ys);
@@ -177,7 +179,7 @@ function drawClaimedTiles(winningTypes) {
 
         ctx.save();
 
-        // ── 1. Draw glow OUTSIDE the clip (behind the tile) ──
+        //<> 1. Draw glow OUTSIDE the clip (behind the tile)
         const isWinner = winningTypes && winningTypes.includes(tile.squareType);
         const pulse = 0.5 + 0.5 * Math.sin(Date.now() * 0.008);
         const glowR = Math.max(bboxW, bboxH) * 0.7;
@@ -195,7 +197,7 @@ function drawClaimedTiles(winningTypes) {
             ctx.fillStyle = gr;
             ctx.fill();
         } else {
-            // Subtle ambient glow always on
+            //* Subtle ambient glow always on
             const gc = tile.player === FIRE
                 ? 'rgba(255,80,0,0.22)'
                 : 'rgba(0,180,255,0.22)';
@@ -208,28 +210,27 @@ function drawClaimedTiles(winningTypes) {
             ctx.fill();
         }
 
-        // ── 2. Build polygon clip path ──
+        //<> 2. Build polygon clip path
         ctx.beginPath();
         verts.forEach((v, i) => i === 0 ? ctx.moveTo(v.x, v.y) : ctx.lineTo(v.x, v.y));
         ctx.closePath();
         ctx.clip();
 
-        // ── 3. Scale pop-in: scale around centroid ──
+        //<> 3. Scale pop-in: scale around centroid
         ctx.translate(cx, cy);
         ctx.scale(tile.scale, tile.scale);
         ctx.translate(-cx, -cy);
 
-        // ── 4. Draw image fitted to the polygon bounding box ──
-        // Aspect-correct fit: scale image so it covers the bbox
+        //<> 4. Draw image fitted to the polygon bounding box
         const imgAspect = img.naturalWidth / img.naturalHeight;
         const bboxAspect = bboxW / bboxH;
         let drawW, drawH;
         if (imgAspect > bboxAspect) {
-            // Image wider than bbox — fit height, crop sides
+            //* Image wider than bbox — fit height, crop sides
             drawH = bboxH;
             drawW = bboxH * imgAspect;
         } else {
-            // Image taller than bbox — fit width, crop top/bottom
+            //* Image taller than bbox — fit width, crop top/bottom
             drawW = bboxW;
             drawH = bboxW / imgAspect;
         }
@@ -241,7 +242,7 @@ function drawClaimedTiles(winningTypes) {
 }
 
 /* ============================================================
-   PROJECTILE
+   !PROJECTILE
    ============================================================ */
 let projectiles = [];
 
@@ -357,7 +358,7 @@ class Projectile {
 }
 
 /* ============================================================
-   IMPACT BURST
+    !IMPACT BURST
    ============================================================ */
 let impacts = [];
 
@@ -378,7 +379,7 @@ function spawnImpact(squareType, player) {
 }
 
 /* ============================================================
-   AMBIENT PARTICLES
+    !AMBIENT PARTICLES
    ============================================================ */
 let ambientParticles = [];
 class AmbientParticle {
@@ -410,7 +411,7 @@ function burstParticles(winner) {
 }
 
 /* ============================================================
-   RENDER LOOP
+    !RENDER LOOP
    ============================================================ */
 let winningTypes = [];
 
@@ -465,7 +466,7 @@ function renderLoop() {
 renderLoop();
 
 /* ============================================================
-   GAME LOGIC
+    !GAME LOGIC
    ============================================================ */
 function initBoard() {
     board = {};
@@ -521,11 +522,11 @@ function handleMove(squareType) {
 function applyMove(squareType, player) {
     board[squareType] = player;
     const cell = document.querySelector(`[data-square-type="${squareType}"]`);
-    // Don't add .fire/.ice CSS color classes — canvas handles the visual
+
     cell.classList.add('claimed');
     cell.style.pointerEvents = 'none';
 
-    // Register for canvas drawing with pop-in animation
+    //<> Register for canvas drawing with pop-in animation
     claimedTiles.push({ squareType, player, scale: 0, targetScale: 1 });
 
     const winLine = checkWin(player);
@@ -544,7 +545,7 @@ function applyMove(squareType, player) {
 }
 
 function checkWin(player) {
-    for (const line of WIN_LINES) if (line.every(sq => board[sq] === player)) return line;
+    for (const line of winOptions) if (line.every(sq => board[sq] === player)) return line;
     return null;
 }
 function checkDraw() { return Object.values(board).every(v => v !== null); }
@@ -574,13 +575,13 @@ function clearCharacterStates() {
     [fireChar, iceChar].forEach(c => c.classList.remove('victory', 'defeated'));
 }
 
-/* ── Minimax AI ── */
+//! MINMAX AI
 function doAIMove() {
     const best = minimax(board, ICE, 0); aiThinking = false; handleMove(best.move);
 }
 function minimax(boardState, player, depth) {
     const opp = player === ICE ? FIRE : ICE;
-    for (const line of WIN_LINES) {
+    for (const line of winOptions) {
         if (line.every(sq => boardState[sq] === ICE)) return { score: 10 - depth };
         if (line.every(sq => boardState[sq] === FIRE)) return { score: -10 + depth };
     }
@@ -590,7 +591,7 @@ function minimax(boardState, player, depth) {
     return player === ICE ? moves.reduce((a, b) => b.score > a.score ? b : a) : moves.reduce((a, b) => b.score < a.score ? b : a);
 }
 
-/* ── Buttons ── */
+//<> BUTTONS
 restartBtn.addEventListener('click', resetGame);
 playAgainBtn.addEventListener('click', resetGame);
 onePlayerBtn.addEventListener('click', () => { gameMode = '1P'; resetGame(); });
