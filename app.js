@@ -602,4 +602,35 @@ scoreBoardBtn.addEventListener('click', () => {
 });
 document.getElementById('closeScoreBoard').addEventListener('click', () => scoreBoardOverlay.classList.remove('visible'));
 
+/* ============================================================
+   !ROTATE GATE — show overlay in portrait, hide in landscape
+   ============================================================ */
+const rotateOverlay = document.getElementById('rotateOverlay');
+
+function checkOrientation() {
+    const isPortrait = window.innerHeight > window.innerWidth;
+    rotateOverlay.style.display = isPortrait ? 'flex' : 'none';
+    // Pause / resume the game loop inputs while rotated
+    if (isPortrait) {
+        cells.forEach(c => c.style.pointerEvents = 'none');
+    } else {
+        if (!gameOver && !aiThinking) {
+            cells.forEach(c => {
+                if (board[c.dataset.squareType] === null) {
+                    c.style.pointerEvents = 'auto';
+                }
+            });
+        }
+        resizeCanvas(); // recalculate canvas size after rotation
+    }
+}
+
+window.addEventListener('orientationchange', () => {
+    // Small delay lets the browser finish the resize before we measure
+    setTimeout(checkOrientation, 120);
+});
+window.addEventListener('resize', checkOrientation);
+
+checkOrientation(); // run once on load
+
 initBoard();

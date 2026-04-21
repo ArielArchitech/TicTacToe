@@ -754,3 +754,174 @@ canvas.particles {
     border-color: rgba(0, 212, 255, 0.5);
     color: var(--ice);
 }
+
+/* ! ROTATE OVERLAY  */
+
+.rotate-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: #060608;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.rotate-box {
+    text-align: center;
+    padding: 32px;
+}
+
+.rotate-icon {
+    font-size: 64px;
+    color: var(--ice);
+    animation: rotateHint 2s ease-in-out infinite;
+    display: block;
+    margin-bottom: 20px;
+    line-height: 1;
+}
+
+@keyframes rotateHint {
+    0% {
+        transform: rotate(0deg);
+        opacity: 1;
+    }
+
+    40% {
+        transform: rotate(90deg);
+        opacity: 1;
+    }
+
+    60% {
+        transform: rotate(90deg);
+        opacity: 0.5;
+    }
+
+    100% {
+        transform: rotate(90deg);
+        opacity: 1;
+    }
+}
+
+.rotate-box p {
+    font-family: 'Orbitron', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ice);
+    text-shadow: 0 0 12px rgba(0, 200, 255, 0.5);
+    margin: 0;
+}
+
+/*<> Show overlay only on portrait phones */
+@media (max-width: 900px) and (orientation: portrait) {
+    .rotate-overlay {
+        display: flex;
+    }
+}
+
+/* ! RESPONSIVE — LANDSCAPE PHONES (568px – 900px wide) */
+@media (max-width: 900px) and (orientation: landscape) {
+
+    body {
+        min-width: 568px;
+    }
+
+    .screen {
+        height: 100svh;
+        /* fills viewport height exactly */
+        min-height: 320px;
+    }
+
+    /* ── Title & indicators ── */
+    .title {
+        font-size: 16px;
+        top: 8px;
+        letter-spacing: 0.12em;
+    }
+
+    .turnIndicator {
+        font-size: 7px;
+        top: 36px;
+        padding: 3px 10px;
+        letter-spacing: 0.12em;
+    }
+
+    .player-tag {
+        font-size: 8px;
+        padding: 3px 8px;
+        top: 10px;
+    }
+
+    .player-tag.p1 {
+        left: 12px;
+    }
+
+    .player-tag.p2 {
+        right: 12px;
+    }
+
+    /* ── Characters — narrower, shorter ── */
+    .character {
+        width: 22vw;
+        max-width: 200px;
+    }
+
+    .char-img {
+        height: 78%;
+        max-height: 220px;
+    }
+
+    /* ── Arena — scale down to fit ── */
+    .arena {
+        top: 52%;
+        transform: translate(-50%, -30%);
+    }
+
+    .arenaRing {
+        width: clamp(320px, 52vw, 460px);
+    }
+
+    /* Scale every cell div proportionally with the ring */
+    .cell,
+    .gameBtn {
+        width: clamp(180px, 30vw, 260px);
+        height: clamp(180px, 30vw, 260px);
+    }
+
+    /* ── Game button labels ── */
+    .gameBtn::after {
+        font-size: 7.5px;
+    }
+
+    /* ── Overlays ── */
+    .result-box {
+        padding: 22px 32px;
+    }
+
+    .result-msg {
+        font-size: 20px;
+        margin-bottom: 14px;
+    }
+
+    .play-again-btn {
+        font-size: 9px;
+        padding: 8px 18px;
+    }
+
+    .scoreboard-box {
+        padding: 20px 32px;
+        min-width: 240px;
+    }
+
+    .scoreboard-title {
+        font-size: 10px;
+        margin-bottom: 16px;
+    }
+
+    .score-value {
+        font-size: 18px;
+    }
+}
