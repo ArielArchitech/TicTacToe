@@ -22,6 +22,18 @@
     box-sizing: border-box;
 }
 
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    /* Match your game's black background */
+    overflow: hidden;
+    /* Prevent scrollbars from scaling math */
+}
+
 body {
     background: #0a0a0a;
     min-height: 669px;
@@ -33,7 +45,7 @@ body {
     overflow: hidden;
 }
 
-/* Subtle background noise/texture */
+/*<> BACKGROUND TEXTURE */
 body::before {
     content: '';
     position: fixed;
@@ -86,7 +98,7 @@ body::before {
     --glow-color: rgba(0, 200, 255, 0.7);
 }
 
-/*<> Ground glow under characters */
+/*<> GROUND GLOW UNDER CHARACTER */
 .char-ground {
     position: absolute;
     bottom: 0;
@@ -235,7 +247,7 @@ clip-path: polygon(62% 32%, 95.3% 32%, 97.3% 37%, 98.8% 42%, 99.3% 47%, 99% 52%,
     /* No flex/padding on the base — we use ::after for text */
 }
 
-/* Text label via pseudo-element, positioned at each slice's center */
+/*<> TEXT LABEL VIA PSEUDO-ELEMENT, POSITIONED AT EACH SHAPE'S CENTER */
 .gameBtn::after {
     content: attr(data-label);
     position: absolute;
@@ -259,18 +271,7 @@ clip-path: polygon(62% 32%, 95.3% 32%, 97.3% 37%, 98.8% 42%, 99.3% 47%, 99% 52%,
     text-shadow: 0 0 14px rgba(0, 212, 255, 1), 0 0 28px rgba(0, 212, 255, 0.6), 0 0 2px #000;
 }
 
-/* Remove active-mode highlight entirely */
-.gameBtn.active-mode {
-    background: transparent !important;
-    box-shadow: none !important;
-}
-
-.gameBtn.active-mode::after {
-    text-shadow: 0 0 8px rgba(0, 212, 255, 0.9), 0 0 2px #000 !important;
-    color: #ffffff !important;
-}
-
-/* ── Per-button sizing and clip-path (unchanged from your CSS) ── */
+/*<> FOR BUTTON SIZING & CLIP-PATH */
 #restartBtn {
     width: 360px;
     height: 360px;
@@ -371,7 +372,7 @@ clip-path: polygon(62% 32%, 95.3% 32%, 97.3% 37%, 98.8% 42%, 99.3% 47%, 99% 52%,
     box-shadow: 0 0 10px rgba(0, 200, 255, 0.3);
 }
 
-/*! ── GAME NAME TITLE ── */
+/*! GAME NAME TITLE */
 .title {
     position: absolute;
     top: 18px;
@@ -391,7 +392,7 @@ clip-path: polygon(62% 32%, 95.3% 32%, 97.3% 37%, 98.8% 42%, 99.3% 47%, 99% 52%,
     filter: drop-shadow(0 0 12px rgba(255, 170, 0, 0.5));
 }
 
-/*! ── PLAYER NAME TAGS ── */
+/*! PLAYER NAME TAGS */
 .player-tag {
     position: absolute;
     top: 28px;
@@ -423,7 +424,7 @@ clip-path: polygon(62% 32%, 95.3% 32%, 97.3% 37%, 98.8% 42%, 99.3% 47%, 99% 52%,
 
 
 
-/* Scanline overlay */
+/*<> SCANLINE MODAL */
 .scanlines {
     position: absolute;
     inset: 0;
@@ -436,7 +437,7 @@ clip-path: polygon(62% 32%, 95.3% 32%, 97.3% 37%, 98.8% 42%, 99.3% 47%, 99% 52%,
     z-index: 20;
 }
 
-/* Particles placeholder (will be added by JS) */
+/*<> PARTICLE PLACEHOLDER (added by JS) */
 canvas.particles {
     position: absolute;
     inset: 0;
@@ -444,7 +445,7 @@ canvas.particles {
     pointer-events: none;
 }
 
-/* ── Turn indicator ── */
+/*<> Turn indicator */
 .turn-indicator {
     position: absolute;
     top: 62px;
@@ -476,13 +477,13 @@ canvas.particles {
     box-shadow: 0 0 10px rgba(0, 200, 255, 0.3);
 }
 
-/* ── Cell states ── */
+/*<> Cell states */
 .cell {
     cursor: pointer;
     transition: opacity 0.2s;
 }
 
-/* Hover hint — shows current player's colour before clicking */
+/*<> CURRENT PLAYER's HOVER COLOR BEFORE CLICKING */
 .cell.hint-fire {
     background-color: rgba(255, 106, 0, 0.35) !important;
 }
@@ -491,7 +492,7 @@ canvas.particles {
     background-color: rgba(0, 200, 255, 0.35) !important;
 }
 
-/* Claimed states */
+/*<> Claimed states */
 .cell.fire {
     background-color: rgba(255, 90, 0, 0.82) !important;
     box-shadow: inset 0 0 18px rgba(255, 60, 0, 0.6);
@@ -502,7 +503,7 @@ canvas.particles {
     box-shadow: inset 0 0 18px rgba(0, 120, 255, 0.6);
 }
 
-/* Winning cells — pulsing glow */
+/*<> PULSING GLOW */
 @keyframes winPulse {
 
     0%,
@@ -531,14 +532,7 @@ canvas.particles {
     box-shadow: 0 0 30px 10px rgba(0, 180, 255, 0.8) !important;
 }
 
-/* Active mode button highlight */
-.gameBtn.active-mode {
-    background-color: rgba(0, 212, 255, 0.22) !important;
-    color: #00d4ff !important;
-    box-shadow: 0 0 16px 4px rgba(0, 212, 255, 0.5) !important;
-}
-
-/* ── Character victory / defeat animations ── */
+/*<> CHARACTER VICTORY & DEFEAT ANIMATION */
 @keyframes victoryFloat {
 
     0%,
@@ -575,7 +569,7 @@ canvas.particles {
     animation: defeated 2s ease-in-out infinite !important;
 }
 
-/* ── Result overlay ── */
+/*<> RESULT MODAL */
 .result-overlay {
     position: absolute;
     inset: 0;
@@ -653,7 +647,7 @@ canvas.particles {
     box-shadow: 0 0 18px rgba(0, 212, 255, 0.5);
 }
 
-/* ── Score board overlay ── */
+/*<> SCORE BOARD MODAL ── */
 .scoreboard-overlay {
     position: absolute;
     inset: 0;
@@ -755,7 +749,7 @@ canvas.particles {
     color: var(--ice);
 }
 
-/* ! ROTATE OVERLAY  */
+/*! ROTATE MODAL — always rendered, shown only in portrait */
 
 .rotate-overlay {
     display: none;
@@ -766,6 +760,7 @@ canvas.particles {
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    pointer-events: all;
 }
 
 .rotate-box {
@@ -774,154 +769,57 @@ canvas.particles {
 }
 
 .rotate-icon {
-    font-size: 64px;
-    color: var(--ice);
-    animation: rotateHint 2s ease-in-out infinite;
-    display: block;
-    margin-bottom: 20px;
+    font-size: 72px;
     line-height: 1;
+    display: block;
+    margin-bottom: 24px;
+    animation: rotateHint 2s ease-in-out infinite;
+    filter: drop-shadow(0 0 18px rgba(0, 200, 255, 0.7));
 }
 
 @keyframes rotateHint {
     0% {
         transform: rotate(0deg);
-        opacity: 1;
     }
 
-    40% {
-        transform: rotate(90deg);
-        opacity: 1;
-    }
-
-    60% {
-        transform: rotate(90deg);
-        opacity: 0.5;
+    50% {
+        transform: rotate(-90deg);
     }
 
     100% {
-        transform: rotate(90deg);
-        opacity: 1;
+        transform: rotate(-90deg);
     }
 }
 
 .rotate-box p {
     font-family: 'Orbitron', monospace;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 700;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--ice);
-    text-shadow: 0 0 12px rgba(0, 200, 255, 0.5);
+    text-shadow: 0 0 14px rgba(0, 200, 255, 0.6);
     margin: 0;
 }
 
-/*<> Show overlay only on portrait phones */
-@media (max-width: 900px) and (orientation: portrait) {
-    .rotate-overlay {
-        display: flex;
-    }
+#screen.scaled {
+    position: absolute;
+    transform-origin: top left;
+    transform: scale(var(--mobile-scale));
+} 
+
+.screen.scaled {
+    position: fixed !important;
+    width: 1280px !important;
+    height: 750px !important;
+    transform-origin: top left !important;
+    transform: scale(var(--mobile-scale, 1)) !important;
 }
 
-/* ! RESPONSIVE — LANDSCAPE PHONES (568px – 900px wide) */
-@media (max-width: 900px) and (orientation: landscape) {
+.rotate-overlay.portrait-active {
+    display: flex !important;
+}
 
-    body {
-        min-width: 568px;
-    }
-
-    .screen {
-        height: 100svh;
-        /* fills viewport height exactly */
-        min-height: 320px;
-    }
-
-    /* ── Title & indicators ── */
-    .title {
-        font-size: 16px;
-        top: 8px;
-        letter-spacing: 0.12em;
-    }
-
-    .turnIndicator {
-        font-size: 7px;
-        top: 36px;
-        padding: 3px 10px;
-        letter-spacing: 0.12em;
-    }
-
-    .player-tag {
-        font-size: 8px;
-        padding: 3px 8px;
-        top: 10px;
-    }
-
-    .player-tag.p1 {
-        left: 12px;
-    }
-
-    .player-tag.p2 {
-        right: 12px;
-    }
-
-    /* ── Characters — narrower, shorter ── */
-    .character {
-        width: 22vw;
-        max-width: 200px;
-    }
-
-    .char-img {
-        height: 78%;
-        max-height: 220px;
-    }
-
-    /* ── Arena — scale down to fit ── */
-    .arena {
-        top: 52%;
-        transform: translate(-50%, -30%);
-    }
-
-    .arenaRing {
-        width: clamp(320px, 52vw, 460px);
-    }
-
-    /* Scale every cell div proportionally with the ring */
-    .cell,
-    .gameBtn {
-        width: clamp(180px, 30vw, 260px);
-        height: clamp(180px, 30vw, 260px);
-    }
-
-    /* ── Game button labels ── */
-    .gameBtn::after {
-        font-size: 7.5px;
-    }
-
-    /* ── Overlays ── */
-    .result-box {
-        padding: 22px 32px;
-    }
-
-    .result-msg {
-        font-size: 20px;
-        margin-bottom: 14px;
-    }
-
-    .play-again-btn {
-        font-size: 9px;
-        padding: 8px 18px;
-    }
-
-    .scoreboard-box {
-        padding: 20px 32px;
-        min-width: 240px;
-    }
-
-    .scoreboard-title {
-        font-size: 10px;
-        margin-bottom: 16px;
-    }
-
-    .score-value {
-        font-size: 18px;
-    }
+.screen.portrait-hidden {
+    display: none !important;
 }
